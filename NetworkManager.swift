@@ -230,4 +230,13 @@ extension NSMutableData {
             }
         }
     }
+    
+  class CommonUtil {
+    func postRequest<T:Codable> (_ url: String, _ param:[String: Any], _ method: HTTPMethod, _ completionHandler: @escaping(T) -> Void)  {
+        NetworkManager.shared.urlRequesttoServer(with: url, param: [:], method: .Get) {response,error  in
+            let dataModel = try! JSONDecoder().decode(T.self, from: response)
+           completionHandler(dataModel)
+        }
+    }
+}
 }
